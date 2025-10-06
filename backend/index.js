@@ -1,3 +1,9 @@
+// Domenic Toscano
+// 10/5/25
+// IT302-451
+// Project Phase 2
+// dot5@njit.edu
+
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 const app = require("./server");
