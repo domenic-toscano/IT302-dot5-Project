@@ -7,12 +7,15 @@
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 const app = require("./server");
+
 const BikesDAO = require("./dao/bikesDAO");
+const FeedbackDAO = require("./dao/feedbackDAO"); 
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.DB_NAME || "it302";
-const COLLECTION_NAME = process.env.COLLECTION_NAME || "citiBikes_dot5";
+const BIKE_COLLECTION = process.env.BIKE_COLLECTION || "CitiBikes_dot5";
+const FEEDBACK_COLLECTION = process.env.FEEDBACK_COLLECTION || "feedback_dot5";
 
 const client = new MongoClient(MONGO_URI, {});
 
@@ -21,8 +24,10 @@ async function start() {
     await client.connect();
     console.log("MongoDB connected");
 
-    await BikesDAO.injectDB(client, DB_NAME, COLLECTION_NAME);
-    console.log("BikesDAO initialized");
+    await BikesDAO.injectDB(client, DB_NAME, BIKE_COLLECTION);
+    await FeedbackDAO.injectDB(client, DB_NAME, FEEDBACK_COLLECTION);
+
+    console.log("DAOs initialized");
 
     app.listen(PORT, () =>
       console.log(`Server running at http://localhost:${PORT}`)
