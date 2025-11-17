@@ -34,4 +34,22 @@ module.exports = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  async apiGetBikeById(req, res) {
+    try {
+      const bikeId = req.params.id;
+      console.log('Looking for bike with ID:', bikeId);
+      
+      const bike = await BikesDAO.getBikeById(bikeId);
+      
+      if (!bike) {
+        return res.status(404).json({ error: 'Bike not found' });
+      }
+      
+      res.json(bike);
+    } catch (err) {
+      console.error('Error getting bike by ID:', err);
+      res.status(500).json({ error: err.message });
+    }
+  },
 };

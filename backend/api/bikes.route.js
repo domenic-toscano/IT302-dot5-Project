@@ -10,5 +10,6 @@ const BikesCtrl = require("./bikes.controller");
 const router = express.Router();
 
 router.get("/bikes", BikesCtrl.apiGetBikes);
+router.get("/bikes/:id", BikesCtrl.apiGetBikeById);
 
 module.exports = router;
